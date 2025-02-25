@@ -15,8 +15,8 @@ type Beer = {
 
 export default class BeerModel {
   static getByFilters: (
-    color: Color | string,
-    density: Density | string
+    color: Color,
+    density: Density
   ) => Promise<Beer[] | void> = async (color, density) => {
     try {
       const [beers] = await CONNECTION.query<Beer[] & mysql.RowDataPacket[]>(

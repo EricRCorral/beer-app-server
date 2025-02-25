@@ -3,11 +3,19 @@ import BeerModel from "../models/beer.ts";
 import type { Color, Density } from "../models/beer.ts";
 
 export default class BeerController {
-  static getByFilters: express.RequestHandler<{
-    color: Color;
-    density: Density;
-  }> = async (req, res) => {
-    const { color, density } = req.params;
+  static getByFilters = async (
+    req: express.Request<
+      {},
+      {},
+      {},
+      {
+        color: Color;
+        density: Density;
+      }
+    >,
+    res: express.Response
+  ) => {
+    const { color, density } = req.query;
     try {
       const beers = await BeerModel.getByFilters(color, density);
 
@@ -24,7 +32,7 @@ export default class BeerController {
       const beer = await BeerModel.getById(id);
 
       if (!beer) {
-        res.status(404).json({ message: "No se a encontrado el producto" });
+        res.status(404).json({ error: "No se a encontrado el producto" });
         return;
       }
 
