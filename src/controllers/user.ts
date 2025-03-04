@@ -1,35 +1,35 @@
 import express from "express";
-import AuthModel from "../models/auth.ts";
-import validateAuth from "../schemas/auth.ts";
+import UserModel from "../models/user.ts";
+import validateUser from "../schemas/user.ts";
 import jwt from "jsonwebtoken";
-import type Auth from "../types/auth.ts";
+import type User from "../types/user.ts";
 
-const handleValidateAuth = (
-  req: express.Request<any, any, Auth>,
+const handleValidateUser = (
+  req: express.Request<any, any, User>,
   res: express.Response
 ) => {
-  const VALIDATED_AUTH = validateAuth(req.body);
+  const VALIDATED_USER = validateUser(req.body);
 
-  if (!VALIDATED_AUTH.success)
+  if (!VALIDATED_USER.success)
     res.status(400).json({
-      error: VALIDATED_AUTH.error.errors
+      error: VALIDATED_USER.error.errors
         .map(({ message }) => message)
         .join("\n"),
     });
 
-  return VALIDATED_AUTH;
+  return VALIDATED_USER;
 };
 
-export default class AuthController {
-  static register: express.RequestHandler<any, any, Auth> = async (
+export default class UserController {
+  static register: express.RequestHandler<any, any, User> = async (
     req,
     res
   ) => {
-    const VALIDATED_AUTH = handleValidateAuth(req, res);
+    const VALIDATED_USER = handleValidateUser(req, res);
 
-    if (!VALIDATED_AUTH.success) return;
+    if (!VALIDATED_USER.success) return;
 
-    const resp = await AuthModel.register(VALIDATED_AUTH.data);
+    const resp = await UserModel.register(VALIDATED_USER.data);
 
     if (!!resp?.error) {
       res.status(400).json(resp);
@@ -47,12 +47,12 @@ export default class AuthController {
       .json(rest);
   };
 
-  static signIn: express.RequestHandler<any, any, Auth> = async (req, res) => {
-    const VALIDATED_AUTH = handleValidateAuth(req, res);
+  static signIn: express.RequestHandler<any, any, User> = async (req, res) => {
+    const VALIDATED_USER = handleValidateUser(req, res);
 
-    if (!VALIDATED_AUTH.success) return;
+    if (!VALIDATED_USER.success) return;
 
-    const resp = await AuthModel.signIn(VALIDATED_AUTH.data);
+    const resp = await UserModel.signIn(VALIDATED_USER.data);
 
     if (!!resp?.error) {
       res.status(400).json(resp);

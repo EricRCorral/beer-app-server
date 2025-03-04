@@ -12,22 +12,22 @@ const CONNECTION = await mysql.createConnection(
   process.env.DATABASE_URL! ?? DEFAULT_CONFIG
 );
 
-await CONNECTION.query(`CREATE TABLE IF NOT EXISTS Auth (
+await CONNECTION.query(`CREATE TABLE IF NOT EXISTS Users (
   id BINARY(16) PRIMARY KEY DEFAULT (UUID_TO_BIN(UUID())),
   username VARCHAR(32) UNIQUE NOT NULL,
   password VARCHAR(64) NOT NULL
   );`);
 
 await CONNECTION.query(`CREATE TABLE IF NOT EXISTS Beers(
-	id int auto_increment primary key,
-    name varchar(30),
-    description text,
-	image varchar(255),
-	color enum("Rubia", "Roja", "Negra"),
-	density enum("Ligero", "Medio", "Alto"),
-	abv float,
-	ibu float,
-  price int
+	id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30),
+  description TEXT,
+	image VARCHAR(255),
+	color ENUM("Rubia", "Roja", "Negra"),
+	density ENUM("Ligero", "Medio", "Alto"),
+	abv FLOAT,
+	ibu FLOAT,
+  price INT
 );`);
 
 export default CONNECTION;

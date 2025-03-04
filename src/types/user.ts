@@ -1,6 +1,7 @@
 type User = {
-  wishlist: string[];
-  cart: string[];
+  id: string;
+  username: string;
+  password: string;
 };
 
 export default User;
