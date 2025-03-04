@@ -1,6 +1,6 @@
 import express from "express";
 import BeerModel from "../models/beer.ts";
-import type { Color, Density } from "../models/beer.ts";
+import type { Color, Density } from "../types/beer.ts";
 
 export default class BeerController {
   static getByFilters = async (

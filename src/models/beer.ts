@@ -1,17 +1,6 @@
 import mysql from "mysql2/promise";
 import CONNECTION from "../config/db.ts";
-
-export type Color = "Rubia" | "Roja" | "Negra";
-export type Density = "Ligero" | "Medio" | "Alto";
-type Beer = {
-  name: string;
-  description: string;
-  image: string;
-  color: Color;
-  density: Density;
-  abv: number;
-  ibu: number;
-};
+import type { Beer, Color, Density } from "../types/beer.ts";
 
 export default class BeerModel {
   static getByFilters: (
