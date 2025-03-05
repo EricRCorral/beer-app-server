@@ -30,4 +30,12 @@ await CONNECTION.query(`CREATE TABLE IF NOT EXISTS Beers(
   price INT
 );`);
 
+await CONNECTION.query(`CREATE TABLE IF NOT EXISTS WishLists (
+  user_id BINARY(16) NOT NULL,
+  beer_id INT NOT NULL,
+  PRIMARY KEY (user_id, beer_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (beer_id) REFERENCES beers(id) ON DELETE CASCADE
+  );`);
+
 export default CONNECTION;
