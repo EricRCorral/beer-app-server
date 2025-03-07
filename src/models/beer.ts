@@ -9,7 +9,7 @@ export default class BeerModel {
   ) => Promise<Beer[] | void> = async (color, density) => {
     try {
       const [beers] = await CONNECTION.query<Beer[] & mysql.RowDataPacket[]>(
-        `SELECT id, color, image, price, density, name FROM Beers WHERE
+        `SELECT id, color, image, price, density, name, description FROM Beers WHERE
         (? IS NULL OR color = ?) AND 
         (? IS NULL OR density = ?)`,
         [color, color, density, density]

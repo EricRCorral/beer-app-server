@@ -39,3 +39,16 @@ await CONNECTION.query(`CREATE TABLE IF NOT EXISTS WishLists (
   );`);
 
 export default CONNECTION;
+
+await CONNECTION.query(`CREATE TABLE IF NOT EXISTS Carts (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id BINARY(16) NOT NULL,
+  beer_id INT NOT NULL,
+  name VARCHAR(30) NOT NULL,
+  image VARCHAR(255) NOT NULL,
+  price INT,
+  quantity INT NOT NULL CHECK (quantity > 0),
+  UNIQUE (user_id, beer_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (beer_id) REFERENCES beers(id) ON DELETE CASCADE
+  );`);
