@@ -42,7 +42,9 @@ export default class UserController {
       .status(201)
       .cookie("access_token", token, {
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "none",
+        secure: true,
+        path: "/",
       })
       .json(rest);
   };
@@ -64,7 +66,9 @@ export default class UserController {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "none",
+        secure: true,
+        path: "/",
       })
       .json(rest);
   };

@@ -6,16 +6,19 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env --experimental-transform-types --watch src/index.ts",
+    "ngrok": "ngrok http --url=mature-halibut-neatly.ngrok-free.app 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Eric C.",
   "license": "ISC",
   "dependencies": {
+    "@types/mercadopago": "^1.5.11",
     "bcrypt": "5.1.1",
     "cookie-parser": "1.4.7",
     "cors": "2.8.5",
     "express": "4.21.2",
     "jsonwebtoken": "9.0.2",
+    "mercadopago": "^2.3.0",
     "mysql2": "3.12.0",
     "zod": "3.24.1"
   },

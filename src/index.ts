@@ -5,9 +5,10 @@ import BEERS_ROUTER from "./routes/beers.ts";
 import USER_ROUTER from "./routes/user.ts";
 import WISHLIST_ROUTER from "./routes/wishlist.ts";
 import CART_ROUTER from "./routes/cart.ts";
+import CHECKOUT_ROUTER from "./routes/checkout.ts";
 
 const PORT = process.env.PORT || 3000;
-const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "http://localhost:5173";
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "https://localhost:5173";
 
 const APP = express();
 
@@ -21,6 +22,7 @@ APP.use("/beers", BEERS_ROUTER);
 APP.use("/user", USER_ROUTER);
 APP.use("/wishlist", WISHLIST_ROUTER);
 APP.use("/cart", CART_ROUTER);
+APP.use("/checkout", CHECKOUT_ROUTER);
 
 APP.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

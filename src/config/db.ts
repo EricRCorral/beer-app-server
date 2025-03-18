@@ -52,3 +52,23 @@ await CONNECTION.query(`CREATE TABLE IF NOT EXISTS Carts (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (beer_id) REFERENCES beers(id) ON DELETE CASCADE
   );`);
+
+await CONNECTION.query(`CREATE TABLE IF NOT EXISTS Payments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  date_created VARCHAR(255) NOT NULL,
+  total_amount INT NOT NULL,
+  user_id BINARY(16) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
+  );`);
+
+await CONNECTION.query(`CREATE TABLE IF NOT EXISTS PaymentItems (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    payment_id INT NOT NULL,
+    beer_id INT NOT NULL,
+    quantity INT NOT NULL CHECK (quantity > 0),
+    price INT,
+    name VARCHAR(30) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    FOREIGN KEY (payment_id) REFERENCES Payments(id) ON DELETE CASCADE,
+    FOREIGN KEY (beer_id) REFERENCES Beers(id) ON DELETE CASCADE
+);`);
