@@ -11,7 +11,7 @@ const CLIENT = new MercadoPagoConfig({
   accessToken: ACCESS_TOKEN,
 });
 
-export default class CheckoutModel {
+export default class PaymentModel {
   static createPreference = async (
     body: {
       id: string;
@@ -43,7 +43,7 @@ export default class CheckoutModel {
           redirect_urls: { success: "https://localhost:5173/" },
           auto_return: "approved",
           notification_url:
-            "https://mature-halibut-neatly.ngrok-free.app/checkout/webhook",
+            "https://mature-halibut-neatly.ngrok-free.app/payments/webhook",
         },
       });
 
@@ -103,6 +103,36 @@ export default class CheckoutModel {
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  static getPayments = async (user_id: string) => {
+    try {
+      let payments: Omit<Payment & { items?: PaymentItem[] }, "user_id">[] = [];
+
+      const [PAYMENTS] = await CONNECTION.query<
+        Payment[] & mysql.RowDataPacket[]
+      >(`SELECT * FROM Payments WHERE user_id = UUID_TO_BIN(?)`, [user_id]);
+
+      if (PAYMENTS.length === 0) return [];
+
+      payments = PAYMENTS.map(({ user_id, ...rest }) => ({ ...rest }));
+
+      await new Promise((res) => {
+        PAYMENTS.forEach(async ({ id }, index) => {
+          const [PAYMENT_ITEMS] = await CONNECTION.query<
+            PaymentItem[] & mysql.RowDataPacket[]
+          >(`SELECT * FROM PaymentItems WHERE payment_id = ?`, [id]);
+
+          payments[index].items = PAYMENT_ITEMS;
+
+          if (PAYMENTS.length - 1 === index) res(payments);
+        });
+      });
+
+      return payments;
+    } catch (error) {
+      console.log(error);
     }
   };
 }

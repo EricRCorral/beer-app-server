@@ -41,4 +41,14 @@ export default class BeerController {
       res.status(500).json({ error: error.message });
     }
   };
+
+  static getBestSellers: express.RequestHandler = async (_, res) => {
+    try {
+      const BEST_SELLERS = await BeerModel.getBestSellers();
+
+      res.json(BEST_SELLERS);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
 }

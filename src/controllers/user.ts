@@ -74,7 +74,14 @@ export default class UserController {
   };
 
   static logout: express.RequestHandler = (_, res) => {
-    res.clearCookie("access_token").status(204).send();
+    res
+      .clearCookie("access_token", {
+        sameSite: "none",
+        secure: true,
+        httpOnly: true,
+      })
+      .status(204)
+      .send();
   };
 
   static session: express.RequestHandler = async (req, res) => {
