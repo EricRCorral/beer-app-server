@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env --experimental-transform-types --watch src/index.ts",
-    "ngrok": "ngrok http --url=YOUR_NEGROK_URL 3000",
+    "ngrok": "ngrok http --url=YOUR_NGROK_URL 3000",
     "populate": "node src/config/populateDb.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
