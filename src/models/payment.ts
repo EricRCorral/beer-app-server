@@ -6,6 +6,7 @@ import type { Payment } from "../types/payment.ts";
 import type { PaymentItem } from "../types/paymentItem.ts";
 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN_MP!;
+const NGROK_URL = process.env.NGROK_URL;
 
 const CLIENT = new MercadoPagoConfig({
   accessToken: ACCESS_TOKEN,
@@ -42,8 +43,7 @@ export default class PaymentModel {
           back_urls: { success: "https://localhost:5173/" },
           redirect_urls: { success: "https://localhost:5173/" },
           auto_return: "approved",
-          notification_url:
-            "https://mature-halibut-neatly.ngrok-free.app/payments/webhook",
+          notification_url: `https://${NGROK_URL}/payments/webhook`,
         },
       });
 

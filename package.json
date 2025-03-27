@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env --experimental-transform-types --watch src/index.ts",
-    "ngrok": "ngrok http --url=mature-halibut-neatly.ngrok-free.app 3000",
+    "ngrok": "ngrok http --url=YOUR_NEGROK_URL 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Eric C.",
