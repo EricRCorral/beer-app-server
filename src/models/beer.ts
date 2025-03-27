@@ -59,18 +59,37 @@ export default class BeerModel {
 
       const BEST_SELLERS: Beer[] = [];
 
-      await new Promise((res) => {
-        BEST_SELLERS_ID.forEach(async (id, index) => {
-          const [BEER] = await CONNECTION.query<Beer[] & mysql.RowDataPacket[]>(
-            `SELECT id, image, name, description FROM Beers WHERE id = ?`,
-            [id]
-          );
+      if (BEST_SELLERS_ID.length > 0)
+        await new Promise((res) => {
+          BEST_SELLERS_ID.forEach(async (id, index) => {
+            const [BEER] = await CONNECTION.query<
+              Beer[] & mysql.RowDataPacket[]
+            >(`SELECT id, image, name, description FROM Beers WHERE id = ?`, [
+              id,
+            ]);
 
-          BEST_SELLERS.push(BEER[0]);
+            BEST_SELLERS.push(BEER[0]);
 
-          if (BEST_SELLERS_ID.length - 1 === index) res(BEST_SELLERS);
+            if (BEST_SELLERS_ID.length - 1 === index) res(BEST_SELLERS);
+          });
         });
-      });
+
+      if (BEST_SELLERS.length < 6) {
+        await new Promise(async (res) => {
+          const [BEERS] = await CONNECTION.query<
+            Beer[] & mysql.RowDataPacket[]
+          >(`SELECT id, image, name, description FROM Beers `);
+
+          BEERS.forEach((beer) => {
+            if (BEST_SELLERS.length === 6) {
+              res(BEST_SELLERS);
+              return;
+            }
+            if (BEST_SELLERS.every(({ id }) => id !== beer.id))
+              BEST_SELLERS.push(beer);
+          });
+        });
+      }
 
       return BEST_SELLERS;
     } catch (error) {

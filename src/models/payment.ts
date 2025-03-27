@@ -112,7 +112,10 @@ export default class PaymentModel {
 
       const [PAYMENTS] = await CONNECTION.query<
         Payment[] & mysql.RowDataPacket[]
-      >(`SELECT * FROM Payments WHERE user_id = UUID_TO_BIN(?)`, [user_id]);
+      >(
+        `SELECT * FROM Payments WHERE user_id = UUID_TO_BIN(?) ORDER BY date_created DESC`,
+        [user_id]
+      );
 
       if (PAYMENTS.length === 0) return [];
 
