@@ -38,8 +38,6 @@ await CONNECTION.query(`CREATE TABLE IF NOT EXISTS WishLists (
   FOREIGN KEY (beer_id) REFERENCES beers(id) ON DELETE CASCADE
   );`);
 
-export default CONNECTION;
-
 await CONNECTION.query(`CREATE TABLE IF NOT EXISTS Carts (
 	id INT AUTO_INCREMENT PRIMARY KEY,
   user_id BINARY(16) NOT NULL,
@@ -72,3 +70,5 @@ await CONNECTION.query(`CREATE TABLE IF NOT EXISTS PaymentItems (
     FOREIGN KEY (payment_id) REFERENCES Payments(id) ON DELETE CASCADE,
     FOREIGN KEY (beer_id) REFERENCES Beers(id) ON DELETE CASCADE
 );`);
+
+export default CONNECTION;

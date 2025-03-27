@@ -9,4 +9,5 @@ export type Beer = {
   density: Density;
   abv: number;
   ibu: number;
+  price: number;
 };
