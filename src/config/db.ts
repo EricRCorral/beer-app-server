@@ -1,11 +1,11 @@
 import mysql from "mysql2/promise";
 
 const DEFAULT_CONFIG = {
-  host: "localhost",
-  user: "root",
-  port: 3306,
-  password: "password",
-  database: "beer_app_db",
+  host: process.env.HOST ?? "localhost",
+  user: process.env.DB_USER ?? "root",
+  port: process.env.DB_PORT ?? 3306,
+  password: process.env.DB_PASSWORD ?? "password",
+  database: process.env.DB_NAME ?? "beer_app_db",
 };
 
 const CONNECTION = await mysql.createConnection(
